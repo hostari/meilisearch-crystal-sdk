@@ -1,0 +1,9 @@
+name: meilisearch-crystal-sdk
+version: 0.1.0
+
+authors:
+  - paula4230 <paudepolonia000@yahoo.com>
+
+crystal: 1.6.2
+
+license: MIT
