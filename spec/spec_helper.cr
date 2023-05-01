@@ -1,2 +1,5 @@
 require "spec"
-require "../src/meilisearch-crystal-sdk"
+require "webmock"
+
+Spec.before_each &->WebMock.reset
+require "../src/meilisearch"
