@@ -1,0 +1,46 @@
+{
+  "results":[
+    {
+      "indexUid":"movies",
+      "hits":[
+        {
+          "id":13682,
+          "title":"Pooh's Heffalump Movie" 
+        }
+      ],
+      "query":"pooh",
+      "processingTimeMs":26,
+      "limit":5,
+      "offset":0,
+      "estimatedTotalHits":22
+    },
+    {
+      "indexUid":"movies",
+      "hits":[
+        {
+          "id":12,
+          "title":"Finding Nemo"
+        }
+      ],
+      "query":"nemo",
+      "processingTimeMs":5,
+      "limit":5,
+      "offset":0,
+      "estimatedTotalHits":11
+    },
+    {
+      "indexUid":"movie_ratings",
+      "hits":[
+        {
+          "id":"Us",
+          "director": "Jordan Peele" 
+        }
+      ],
+      "query":"Us",
+      "processingTimeMs":0,
+      "limit":20,
+      "offset":0,
+      "estimatedTotalHits":1
+    }
+  ]
+}
