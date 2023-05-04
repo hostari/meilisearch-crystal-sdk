@@ -1,7 +1,7 @@
 module MeiliSearch
   class Document
-    def initialize(@master_key : String, @base_url : String)
-      @client = MeiliSearch::Client.new(@master_key, @base_url)
+    def initialize(@master_key : String, @base_url : String, @environment : String = "development")
+      @client = MeiliSearch::Client.new(@master_key, @base_url, @environment)
     end
 
     def list_all(index_uid : String)
