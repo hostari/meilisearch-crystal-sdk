@@ -7,7 +7,7 @@ class Meilisearch
   end
 
   @@master_key : String?
-  @@base_url : String?
+  @@base_url : String? = "http://localhost:7700"
 
   # @@version : String?
 
@@ -20,7 +20,7 @@ class Meilisearch
   end
 
   def self.base_url=(base_url)
-    @@master_key = master_key
+    @@base_url = base_url
   end
 
   def self.base_url
