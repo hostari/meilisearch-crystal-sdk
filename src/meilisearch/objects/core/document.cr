@@ -10,10 +10,4 @@ class Meilisearch::Document
     uid : String? = nil,
   )
   getter id : Int32? = nil
-
-  getter taskUid : Int32?
-  getter indexUid : String?
-  getter status : String?
-  getter type : String?
-  getter enqueuedAt : String | Time?
 end
