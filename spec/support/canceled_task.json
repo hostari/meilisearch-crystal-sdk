@@ -1,7 +1,7 @@
 {
-  "taskUid": 106,
-  "indexUid": "movies",
+  "taskUid": 3,
+  "indexUid": null,
   "status": "enqueued",
-  "type": "indexUpdate",
+  "type": "taskCancelation",
   "enqueuedAt": "2021-08-12T10:00:00.000000Z"
 }
