@@ -7,7 +7,7 @@ class Meilisearch
   end
 
   @@master_key : String?
-  @@base_url : String? = "http://localhost:7700"
+  @@base_url : String?
 
   # @@version : String?
 
