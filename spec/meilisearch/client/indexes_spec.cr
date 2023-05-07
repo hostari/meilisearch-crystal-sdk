@@ -1,78 +1,62 @@
 require "../../spec_helper"
 
-describe MeiliSearch::Index do
-  meilisearch_index = MeiliSearch::Index.new("test_key", "http://localhost:7700")
-
+describe Meilisearch::Index do
   it "lists all indexes" do
     WebMock.stub(:get, "http://localhost:7700/indexes")
       .to_return(status: 200, body: File.read("spec/support/indexes.json"), headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.list_all
-    indexes = response.body
-
-    indexes.should eq(File.read("spec/support/indexes.json"))
+    indexes = Meilisearch::Index.list
+    indexes.first.uid.should eq("books")
+    indexes.first.primaryKey.should eq("id")
+    indexes.first.createdAt.should eq("2022-03-08T10:00:27.377346Z")
+    indexes.first.updatedAt.should eq("2022-03-08T10:00:27.391209Z")
   end
 
-  it "lists all indexes with limit as a query parameter" do
-    WebMock.stub(:get, "http://localhost:7700/indexes?limit=3")
-      .to_return(status: 200, body: File.read("spec/support/indexes_limit3.json"), headers: {"Content-Type" => "application/json"})
-
-    response = meilisearch_index.list_all(limit: 3)
-    limited_movies = response.body
-
-    limited_movies.should eq(File.read("spec/support/indexes_limit3.json"))
-  end
-
-  it "gets information about a single index" do
+  it "retrieves a single index" do
     WebMock.stub(:get, "http://localhost:7700/indexes/movies")
-      .to_return(status: 200, body: File.read("spec/support/movies_index.json"), headers: {"Content-Type" => "application/json"})
+      .to_return(status: 200, body: File.read("spec/support/indexes_movies.json"), headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.get_index("movies")
-    movies = response.body
-
-    movies.should eq(File.read("spec/support/movies_index.json"))
+    index = Meilisearch::Index.retrieve("movies")
+    index.uid.should eq("movies")
   end
 
   it "creates an index" do
     WebMock.stub(:post, "http://localhost:7700/indexes")
-      .with(body: {uid: "movies", primary_key: "id"}.to_json, headers: {"Content-Type" => "application/json"})
-      .to_return(status: 200, body: File.read("spec/support/created_movie_index.json"), headers: {"Content-Type" => "application/json"})
+      .to_return(status: 200, body: File.read("spec/support/indexes_beverages_post.json"), headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.create_index(uid: "movies", primary_key: "id")
-    created_movie_index = response.body
+    index = Meilisearch::Index.create(uid: "beverages", primary_key: "id")
+    index.indexUid.should eq("beverages")
 
-    created_movie_index.should eq(File.read("spec/support/created_movie_index.json"))
+    WebMock.stub(:get, "http://localhost:7700/indexes/beverages")
+      .to_return(status: 200, body: File.read("spec/support/indexes_beverages.json"), headers: {"Content-Type" => "application/json"})
+
+    beverages = Meilisearch::Index.retrieve("beverages")
+    beverages.primaryKey.should eq("id")
+    beverages.createdAt.should eq("2022-10-10T07:45:15.628261Z")
+    beverages.updatedAt.should eq("2022-10-21T15:28:43.496574Z")
   end
 
   it "updates an index's primary key" do
-    WebMock.stub(:patch, "http://localhost:7700/indexes/movies")
-      .with(body: {primary_key: "id"}.to_json, headers: {"Content-Type" => "application/json"})
+    WebMock.stub(:patch, "http://localhost:7700/indexes/beverages")
       .to_return(status: 200, body: File.read("spec/support/updated_movie_index.json"), headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.update_index(uid: "movies", primary_key: "id")
-    updated_movie_index = response.body
-
-    updated_movie_index.should eq(File.read("spec/support/updated_movie_index.json"))
+    index = Meilisearch::Index.update(index: "beverages", primaryKey: "reference_code")
+    index.taskUid.should eq(106)
   end
 
   it "deletes an index" do
-    WebMock.stub(:delete, "http://localhost:7700/indexes/movies")
-      .to_return(status: 204, headers: {"Content-Type" => "application/json"})
+    WebMock.stub(:delete, "http://localhost:7700/indexes/articles")
+      .to_return(status: 202, body: "", headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.delete_index(uid: "movies", primary_key: "id")
-    updated_movie_index = response.body
-
-    updated_movie_index.should eq("")
+    index = Meilisearch::Index.delete("articles")
+    index.should eq(true)
   end
 
   it "swaps an index" do
     WebMock.stub(:post, "http://localhost:7700/swap-indexes")
-      .with(body: [{"indexes": ["indexA", "indexB"]}, {"indexes": ["indexX", "indexY"]}].to_json, headers: {"Content-Type" => "application/json"})
-      .to_return(status: 200, headers: {"Content-Type" => "application/json"})
+      .to_return(status: 200, body: File.read("spec/support/indexes_swapped.json"), headers: {"Content-Type" => "application/json"})
 
-    response = meilisearch_index.swap_indexes([{"indexes": ["indexA", "indexB"]}, {"indexes": ["indexX", "indexY"]}])
-    updated_movie_index = response.body
-
-    updated_movie_index.should eq("")
+    swapped_indexes = Meilisearch::Index.swap_indexes([{"indexes": ["movies", "movies_new"]}])
+    swapped_indexes.type.should eq(Meilisearch::Task::Type::IndexSwap)
   end
 end

@@ -1,0 +1,22 @@
+{
+  "uid":1,
+  "indexUid":"movies",
+  "status":"succeeded",
+  "type":"settingsUpdate",
+  "canceledBy": null,
+  "details":{
+    "rankingRules":[
+      "typo",
+      "ranking:desc",
+      "words",
+      "proximity",
+      "attribute",
+      "exactness"
+    ]
+  },
+  "error": null,
+  "duration":"PT1S",
+  "enqueuedAt":"2021-08-10T14:29:17.000000Z",
+  "startedAt":"2021-08-10T14:29:18.000000Z",
+  "finishedAt":"2021-08-10T14:29:19.000000Z"
+}

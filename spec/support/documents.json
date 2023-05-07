@@ -14,9 +14,9 @@
       "poster": "https://image.tmdb.org/t/p/w1280/f4ANVEuEaGy2oP5M0Y2P1dwxUNn.jpg",
       "overview": "William has failed to kill himself so many times that he outsources his suicide to aging assassin Leslie. But with the contract signed and death assured within a week (or his money back), William suddenly discovers reasons to live... However Leslie is under pressure from his boss to make sure the contract is completed."
     }
-    ],
-    "offset": 0,
-    "limit": 2,
-    "total": 500134
+  ],
+  "offset": 0,
+  "limit": 2,
+  "total": 500134
 }
   

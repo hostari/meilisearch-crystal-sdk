@@ -1,6 +1,7 @@
-[
-  {
-    "id": 287947,
-    "title": "Shazam ⚡️"
-  }
-]
+{
+  "taskUid": 245,
+  "indexUid": "movies",
+  "status": "enqueued",
+  "type": "documentAdditionOrUpdate",
+  "enqueuedAt": "2021-08-11T09:25:53.000000Z"
+}

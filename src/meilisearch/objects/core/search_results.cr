@@ -1,0 +1,23 @@
+class Meilisearch::SearchResults(T)
+  include JSON::Serializable
+  include Enumerable(T)
+
+  getter hits : Array(T)
+  getter offset : Int32?
+  getter limit : Int32?
+  getter estimatedTotalHits : Int32?
+  getter totalHits : Int32?
+  getter totalPages : Int32?
+  getter hitsPerPage : Int32?
+  getter page : Int32?
+  getter facetDistribution : Hash(String, Array(String))?
+  getter facetStats : Hash(String, Hash(String, Float32))?
+  getter processingTimeMs : Int32?
+  getter query : String?
+
+  def each(&block)
+    hits.each do |i|
+      yield i
+    end
+  end
+end
