@@ -24,7 +24,7 @@ describe Meilisearch::Index do
     WebMock.stub(:post, "http://localhost:7700/indexes")
       .to_return(status: 200, body: File.read("spec/support/indexes_beverages_post.json"), headers: {"Content-Type" => "application/json"})
 
-    index = Meilisearch::Index.create(uid: "beverages", primary_key: "id")
+    index = Meilisearch::Index.create(uid: "beverages", primaryKey: "id")
     index.indexUid.should eq("beverages")
 
     WebMock.stub(:get, "http://localhost:7700/indexes/beverages")
