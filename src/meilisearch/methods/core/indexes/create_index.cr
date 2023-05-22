@@ -1,12 +1,12 @@
 class Meilisearch::Index
   def self.create(
     uid : String,
-    primary_key : String
+    primaryKey : String
   ) : TaskStatus
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
-    {% for x in %w(uid primary_key) %}
+    {% for x in %w(uid primaryKey) %}
       builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
     {% end %}
 
