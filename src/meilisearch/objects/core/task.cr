@@ -16,7 +16,7 @@ class Meilisearch::Task
   getter details : Hash(String, Int32)? | String? | Int32? | Array(NamedTuple(indexes: Array(String)))? | Array(String)? | Hash(String, Array(String))
   getter error : Error? = nil
   getter duration : String? = nil
-  getter enqueuedAt : Time
+  getter enqueuedAt : Time?
   getter startedAt : Time? = nil
   getter finishedAt : Time? = nil
 
