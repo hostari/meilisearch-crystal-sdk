@@ -19,14 +19,26 @@ class Meilisearch::Search
     sort : Array(String)? = nil,
     matching_strategy : String = "last"
   )
-    io = IO::Memory.new
-    builder = ParamsBuilder.new(io)
+    body = {"index_uid":               index_uid,
+            "q":                       q,
+            "offset":                  offset,
+            "limit":                   limit,
+            "hits_per_page":           hits_per_page,
+            "page":                    page,
+            "filter":                  filter,
+            "facets":                  facets,
+            "attributes_to_retrieve":  attributes_to_retrieve,
+            "attributes_to_crop":      attributes_to_crop,
+            "crop_length":             crop_length,
+            "attributes_to_highlight": attributes_to_highlight,
+            "highlight_pre_tag":       highlight_pre_tag,
+            "highlight_post_tag":      highlight_post_tag,
+            "show_matches_position":   show_matches_position,
+            "sort":                    sort,
+            "matching_strategy":       matching_strategy,
+    }
 
-    {% for x in %w(index_uid q offset limit hits_per_page page filter facets attributes_to_retrieve attributes_to_crop crop_length crop_marker attributes_to_highlight highlight_pre_tag show_matches_position sort matching_strategy) %}
-      builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
-    {% end %}
-
-    response = Meilisearch.client.post("/indexes/#{index_uid}/search", form: io.to_s)
+    response = Meilisearch.client.post("/indexes/#{index_uid}/search", body: body.to_json)
 
     if response.status_code == 200
       SearchResults(JSON::Any).from_json(response.body)

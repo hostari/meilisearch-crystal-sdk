@@ -1,16 +1,9 @@
 class Meilisearch::Document
   def self.add_or_replace(
     index_uid : String,
-    body : Array(Hash(String, Int32 | String))
+    document_body : Array(Hash(String, Int32 | String))
   ) : TaskStatus
-    io = IO::Memory.new
-    builder = ParamsBuilder.new(io)
-
-    {% for x in %w(index_uid body) %}
-      builder.add({{x}}, {{x.id}}) unless {{x.id}}.nil?
-    {% end %}
-
-    response = Meilisearch.client.post("/indexes/#{index_uid}/documents", form: io.to_s)
+    response = Meilisearch.client.post("/indexes/#{index_uid}/documents", body: {"index_uid": index_uid, "document_body": document_body}.to_json)
 
     if response.status_code == 200
       TaskStatus.from_json(response.body)
