@@ -13,9 +13,11 @@ class Meilisearch::Index
     response = Meilisearch.client.post("/indexes", form: io.to_s)
 
     if response.status_code == 200
-      TaskStatus.from_json(response.body)
+      pp response.body
+      #TaskStatus.from_json(response.body)
     else
-      raise Error.from_json(response.body, "error")
+      pp response.body
+      #raise Error.from_json(response.body, "error")
     end
   end
 end
