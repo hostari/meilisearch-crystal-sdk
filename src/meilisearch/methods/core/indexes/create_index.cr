@@ -2,7 +2,7 @@ class Meilisearch::Index
   def self.create(
     uid : String,
     primaryKey : String
-  ) : TaskStatus
+  ) #: TaskStatus
     io = IO::Memory.new
     builder = ParamsBuilder.new(io)
 
